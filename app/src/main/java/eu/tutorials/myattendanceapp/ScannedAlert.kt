@@ -110,7 +110,7 @@ fun ScannedAlert(
     AlertDialog(
         onDismissRequest = {
             //openDialog.value = false
-            navController.navigate(Routes.mainmenu)
+            //navController.navigate(Routes.mainmenu)
         },
         title = {
             Text(text = "QR Code Scanned")
@@ -158,6 +158,7 @@ fun ScannedAlert(
                         Toast.makeText(context, "Email failed to send. Please try again.", Toast.LENGTH_SHORT).show()
                     }
 
+                    //back to main menu
                     navController.navigate(Routes.mainmenu)
 
                 }) {
@@ -208,6 +209,7 @@ fun ScannedAlert(
                     Toast.makeText(context, "SMS failed to send. Please try again.", Toast.LENGTH_SHORT).show()
                 }
 
+                //back to main menu
                 navController.navigate(Routes.mainmenu)
             })
             {

@@ -91,8 +91,10 @@ fun DisplayGeneratedQRcode(navController: NavController,
                     authViewModel.fname,
                     authViewModel.lname,
                     authViewModel.designation,
-                    authViewModel.empid) },
+                    authViewModel.empid)
+                    navController.navigate(Routes.mainmenu)},
                 modifier = Modifier.fillMaxWidth().padding(start = 400.dp, top = 20.dp, end = 400.dp))
+
             {
                 Text(text = "Register")
 
