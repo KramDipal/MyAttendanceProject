@@ -15,6 +15,9 @@ class TodoViewModel :ViewModel() {
     //Access DB
     val todoDao = AttendanceApp.todoDatabase.getTodoDao()
 
+    val todoList : LiveData<List<Todo>> = todoDao.getAllTodo()
+    val todoListAll : LiveData<List<LoginUser>> = todoDao.getAllTodoLogUser()
+
     fun addTodo(fname: String, lname: String, designation: String, empid: String){
         Log.i("Kiko/addTodo","${fname}, ${lname}, " +
                 "${designation}, ${empid}, ${Date()} ${Date.from(Instant.now())}")
@@ -34,7 +37,11 @@ class TodoViewModel :ViewModel() {
 
 
 
-    fun selectAllTodo(): LiveData<List<Todo>> = todoDao.getAllTodo()//wishDao.getAllWishes()
+
+    fun selectALlTodo(){
+        todoDao.getAllTodo()
+        //Log.i("selectALlTodo: TodoX","selectALlTodo $TodoX")
+    }
 
     fun selectTodoAny(empid : String){
         Log.i("Kiko/selectTodoAny", empid)
@@ -70,6 +77,14 @@ class TodoViewModel :ViewModel() {
                     ))
         }
     }
+
+    fun deleteTodoLog(id : Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            todoDao.deleteTodoLog(id)
+        }
+    }
+    //for logged in Users
+
 
 
 }

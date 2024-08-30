@@ -8,14 +8,11 @@ import eu.tutorials.myattendanceapp.LoginUser
 import eu.tutorials.myattendanceapp.Todo
 
 
-@Dao //DAO annotation
+@Dao //DAO - Data Access Annotation
 interface TodoDao {
 
     @Query("SELECT * FROM TODO ORDER BY createdAt DESC")
     fun getAllTodo() : LiveData<List<Todo>>
-
-    //@Query("SELECT empid from TODO where empid = :empid")
-    //fun selectTodoAny(empid : String)
 
     @Query("Select * from TODO where empid = :empid")
     fun selectTodoAny(empid : String):LiveData<List<Todo>>
@@ -27,8 +24,15 @@ interface TodoDao {
     fun deleteTodo(id : Int)
 
 
-    //Insert to LoginUser table
+    //LoginUser table
     @Insert
     fun addLoginUser(todo : LoginUser)
+
+    @Query("SELECT * FROM LoginUser ORDER BY createdAt DESC")
+    fun getAllTodoLogUser() : LiveData<List<LoginUser>>
+
+    @Query("DELETE FROM LoginUser where id = :id")
+    fun deleteTodoLog(id : Int)
+    //LoginUser table
 
 }

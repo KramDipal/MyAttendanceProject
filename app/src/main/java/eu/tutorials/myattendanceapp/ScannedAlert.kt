@@ -183,7 +183,7 @@ fun ScannedAlert(
 
                     smsManager.sendTextMessage("+639175736952", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
                     smsManager.sendTextMessage("+639175736952", null, "to a device located at ${location}.  PLEASE DO NOT REPLY to this message.", null, null)
-
+/*
                     //Honey phone number
                     smsManager.sendTextMessage("+639175940314", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
                     smsManager.sendTextMessage("+639175940314", null, "to a device located at ${location}", null, null)
@@ -202,7 +202,7 @@ fun ScannedAlert(
                     //MBT tablet phone no.
                     smsManager.sendTextMessage("+639369303009", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
                     smsManager.sendTextMessage("+639369303009", null, "to a device located at ${location}", null, null)
-
+*/
                     Toast.makeText(context, "SMS sent successfully!", Toast.LENGTH_SHORT).show()
                 }
                 catch(e: Exception){
