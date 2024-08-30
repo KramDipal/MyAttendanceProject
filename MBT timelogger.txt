@@ -1,0 +1,17 @@
+
+
+
+requirements:
+
+1. emp qrcode? time-in/ time-out
+- generate qrcode on registration menu if without qrcode yet?. how? true textbox?
+- name and position?
+2. location (composable) where login/logout triggered
+3. date and time - with OT computation
+
+
+Needs:
+a. database
+b. online receipt
+c. sms receipt
+d. qrcode scan (save, generate)

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "305251683871",
+    "project_id": "myattendanceapp-37bb7",
+    "storage_bucket": "myattendanceapp-37bb7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305251683871:android:cb61ea12d7d58490480f2a",
+        "android_client_info": {
+          "package_name": "eu.tutorials.myattendanceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT4Q4u-tjHxfNZgXG2HdodCYE02gsd9-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
