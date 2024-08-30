@@ -30,4 +30,10 @@
 12. With multiple sms phone number sending.
 13. MBT logo
 14. adjusted button size.
-15. REplaced default/android adaptive icon to MBT icon
+
+
+08/30/24
+1. option to send notification via confirmation and dismiss button from alertDialog for SMS or Email.
+2. Exit onDismissRequest
+3. tested saving of logged-in.
+4. test working email/sms notification
