@@ -30,3 +30,4 @@
 12. With multiple sms phone number sending.
 13. MBT logo
 14. adjusted button size.
+15. REplaced default/android adaptive icon to MBT icon
