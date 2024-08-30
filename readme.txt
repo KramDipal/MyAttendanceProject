@@ -33,7 +33,10 @@
 
 
 08/30/24
-1. option to send notification via confirmation and dismiss button from alertDialog for SMS or Email.
-2. Exit onDismissRequest
-3. tested saving of logged-in.
-4. test working email/sms notification
+15. option to send notification via confirmation and dismiss button from alertDialog for SMS or Email.
+16. Exit onDismissRequest
+17. tested saving of logged-in.
+18. test working email/sms notification
+With Report Menu
+19. Added Report menu in which it displays all the logged records in LoginUser table.
+20. With delete button in row.
