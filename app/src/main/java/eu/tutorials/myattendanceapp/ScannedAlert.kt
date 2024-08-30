@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -22,6 +24,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.core.content.ContextCompat
@@ -38,7 +42,8 @@ fun ScannedAlert(
     navController: NavController
 ){
     val context = LocalContext.current
-
+    val openDialog = remember { mutableStateOf(false) }
+    
     val parts = code.split(" ")
     val partOne = parts[0]
     val partTwo = parts[1]
@@ -105,14 +110,16 @@ fun ScannedAlert(
     AlertDialog(
         onDismissRequest = {
             //openDialog.value = false
+            navController.navigate(Routes.mainmenu)
         },
         title = {
             Text(text = "QR Code Scanned")
         },
         text = {
             Column {
-                SelectionContainer {
-                    Text(text = code)
+                SelectionContainer{
+                    //Text(text = code)
+                    Text(text = "Select Notification")
                 }
             }
         },
@@ -136,7 +143,8 @@ fun ScannedAlert(
 
                             sendEmail(
                                 context,
-                                "francis.lapid@yahoo.com, lapidmaya8@gmail.com, genevievegarcialapid@yahoo.com",
+                                //"francis.lapid@yahoo.com, lapidmaya8@gmail.com, genevievegarcialapid@yahoo.com",
+                                "francis.lapid@yahoo.com",
                                 "Daily Time logger",
                                 "Greetings, \n\n" +
                                         "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime} to a device located at ${location}." +
@@ -150,56 +158,61 @@ fun ScannedAlert(
                         Toast.makeText(context, "Email failed to send. Please try again.", Toast.LENGTH_SHORT).show()
                     }
 
-                    // Send advise through SMS
-                    /*
-                    try {
-
-                        sendSMSPermissionLauncher.launch(Manifest.permission.SEND_SMS)
-                        val smsManager: SmsManager = SmsManager.getDefault()
-
-                        smsManager.sendTextMessage("+639175736952", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
-                        smsManager.sendTextMessage("+639175736952", null, "to a device located at ${location}.  PLEASE DO NOT REPLY to this message.", null, null)
-
-
-                        //Honey phone number
-                        smsManager.sendTextMessage("+639175940314", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
-                        smsManager.sendTextMessage("+639175940314", null, "to a device located at ${location}", null, null)
-
-
-                        //Mike phone number
-                        smsManager.sendTextMessage("+639125988789", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
-                        smsManager.sendTextMessage("+639125988789", null, "to a device located at ${location}", null, null)
-
-
-                        //Isang phone number
-                        smsManager.sendTextMessage("+639611202551", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
-                        smsManager.sendTextMessage("+639611202551", null, "to a device located at ${location}", null, null)
-
-
-                        //MBT tablet phone no.
-                        smsManager.sendTextMessage("+639369303009", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
-                        smsManager.sendTextMessage("+639369303009", null, "to a device located at ${location}", null, null)
-
-
-
-                        Toast.makeText(context, "SMS sent successfully!", Toast.LENGTH_SHORT).show()
-
-                    } catch (e: Exception) {
-                        Toast.makeText(context, "SMS failed to send. Please try again.", Toast.LENGTH_SHORT).show()
-                    }
-                    */
+                    navController.navigate(Routes.mainmenu)
 
                 }) {
                 Text("Send as Email")
             }
         },
         dismissButton = {
-            Button(
-                //onClick = onDismiss,
-                //openDialog.value = false
-                  onClick = {navController.navigate(Routes.mainmenu)})
+            Button(onClick = {
+
+                todoViewModel.addLoginUser(
+                    partOne,
+                    partTwo,
+                    partThree,
+                    partFour,
+                    latlocOne,
+                    longLocOne
+                )
+
+                try{
+                    sendSMSPermissionLauncher.launch(Manifest.permission.SEND_SMS)
+                    val smsManager: SmsManager = SmsManager.getDefault()
+
+                    smsManager.sendTextMessage("+639175736952", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
+                    smsManager.sendTextMessage("+639175736952", null, "to a device located at ${location}.  PLEASE DO NOT REPLY to this message.", null, null)
+
+                    //Honey phone number
+                    smsManager.sendTextMessage("+639175940314", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
+                    smsManager.sendTextMessage("+639175940314", null, "to a device located at ${location}", null, null)
+
+
+                    //Mike phone number
+                    smsManager.sendTextMessage("+639125988789", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
+                    smsManager.sendTextMessage("+639125988789", null, "to a device located at ${location}", null, null)
+
+
+                    //Isang phone number
+                    smsManager.sendTextMessage("+639611202551", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
+                    smsManager.sendTextMessage("+639611202551", null, "to a device located at ${location}", null, null)
+
+
+                    //MBT tablet phone no.
+                    smsManager.sendTextMessage("+639369303009", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
+                    smsManager.sendTextMessage("+639369303009", null, "to a device located at ${location}", null, null)
+
+                    Toast.makeText(context, "SMS sent successfully!", Toast.LENGTH_SHORT).show()
+                }
+                catch(e: Exception){
+                    Toast.makeText(context, "SMS failed to send. Please try again.", Toast.LENGTH_SHORT).show()
+                }
+
+                navController.navigate(Routes.mainmenu)
+            })
             {
-                Text("Cancel")
+                //Text("Cancel")
+                Text("Via SMS")
             }
         }
     )
