@@ -28,6 +28,9 @@ interface TodoDao {
     @Insert
     fun addLoginUser(todo : LoginUser)
 
+    @Query("Select * from LoginUser where empid = :empID")
+    fun selectTodoAnyLoginUser(empID : String):LiveData<List<LoginUser>>
+
     @Query("SELECT * FROM LoginUser ORDER BY createdAt DESC")
     fun getAllTodoLogUser() : LiveData<List<LoginUser>>
 

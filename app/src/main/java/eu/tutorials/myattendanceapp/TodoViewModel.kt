@@ -17,6 +17,8 @@ class TodoViewModel :ViewModel() {
 
     val todoList : LiveData<List<Todo>> = todoDao.getAllTodo()
     val todoListAll : LiveData<List<LoginUser>> = todoDao.getAllTodoLogUser()
+    val todoListAny : LiveData<List<LoginUser>> = todoDao.selectTodoAnyLoginUser("000005")
+
 
     fun addTodo(fname: String, lname: String, designation: String, empid: String){
         Log.i("Kiko/addTodo","${fname}, ${lname}, " +
@@ -81,6 +83,12 @@ class TodoViewModel :ViewModel() {
     fun deleteTodoLog(id : Int){
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.deleteTodoLog(id)
+        }
+    }
+
+    fun selectTodoAnyLoginUser(empid : String){
+        viewModelScope.launch(Dispatchers.IO) {
+            todoDao.selectTodoAnyLoginUser(empid)
         }
     }
     //for logged in Users

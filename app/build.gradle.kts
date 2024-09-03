@@ -119,4 +119,6 @@ dependencies {
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$roomversion")
 
+    implementation("com.opencsv:opencsv:5.5.2")
+
 }
