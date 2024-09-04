@@ -46,10 +46,10 @@ fun registrationMenu(navController: NavController, authViewModel: AuthViewModel)
 
 
     //clear text fields
-    authViewModel.empid = ""
-    authViewModel.fname = ""
-    authViewModel.lname = ""
-    authViewModel.designation = ""
+    //authViewModel.empid = ""
+    //authViewModel.fname = ""
+    //authViewModel.lname = ""
+    //authViewModel.designation = ""
 
 
     Surface(

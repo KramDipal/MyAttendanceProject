@@ -35,28 +35,33 @@ fun MainMenu(modifier: Modifier = Modifier,
     val context = LocalContext.current
 
     // For user access limitation
+    // TO save the last logged-in username.  This will fix button enabled limitations if application
+    // was closed
+    val getSaveUsername = MyAppPreferences(context).getParameterValue()
+    val getSaveUsernameX = getSaveUsername?.substringBefore("@")
     val username = authViewModel.userName.substringBefore("@")
     val adminUser = "kiko1234"
-    val adminUser2 = "admin1234"
     var getUserName: Boolean = false
 
-    Log.i("MainMenu", "${authViewModel.userName}, $username")
+    Log.i("MainMenu", "${authViewModel.userName}, username: $username, getSaveUsernameX: $getSaveUsernameX")
 
     if(username.equals(adminUser, ignoreCase = true) ||
-        username.equals(adminUser2, ignoreCase = true)){
+        getSaveUsernameX.equals(adminUser, ignoreCase = true))
+    {
         Log.i("MainMenu", "It's True!!!")
+
         getUserName = true
     }
     // For user access limitation
 
 
-        LaunchedEffect(authState.value){
-            when(authState.value) {
-                is AuthState.Unathenticated -> navController.navigate(Routes.loginpagemenu)
-                else -> Unit
 
-            }
-        }
+    LaunchedEffect(authState.value){
+         when(authState.value) {
+             is AuthState.Unathenticated -> navController.navigate(Routes.loginpagemenu)
+             else -> Unit
+         }
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),

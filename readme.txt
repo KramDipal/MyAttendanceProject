@@ -47,3 +47,13 @@ With Report Menu
 09/04/24
 22. Access limitations for non admin user.
 - Disabled buttons.
+23. Added val adminUser2 = "admin1234" for user limit.
+24. adjust button size in SignupPage.
+25. added script to clear text fields RegistrationMenu
+26. Adjust spacing between salary details in ReportGenerator
+27.
+Added:
+1. MyAppPreferences
+- saveParameterValue
+- getParameterValue
+- to save last logged-in user to retain button limitation per user access.

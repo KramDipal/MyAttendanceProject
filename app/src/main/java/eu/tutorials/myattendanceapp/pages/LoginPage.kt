@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tutorials.myattendanceapp.AuthState
 import eu.tutorials.myattendanceapp.AuthViewModel
+import eu.tutorials.myattendanceapp.MyAppPreferences
 import eu.tutorials.myattendanceapp.R
 import eu.tutorials.myattendanceapp.Routes
 
@@ -100,7 +101,13 @@ fun LoginPage(modifier: Modifier = Modifier,
                 }, visualTransformation = PasswordVisualTransformation())
 
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = {authViewModel.Login(email, password)},
+                Button(onClick =
+                {
+                    authViewModel.Login(email, password)
+
+                    //for button access limitation
+                    MyAppPreferences(context).saveParameterValue(email)
+                },
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 300.dp, top = 20.dp, end = 300.dp))//,
                     //modifier = Modifier.fillMaxWidth().padding(start = 400.dp, top = 20.dp, end = 400.dp))

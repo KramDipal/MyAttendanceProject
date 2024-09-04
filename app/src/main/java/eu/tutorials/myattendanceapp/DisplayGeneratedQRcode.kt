@@ -76,10 +76,10 @@ fun DisplayGeneratedQRcode(navController: NavController,
                 }
         )
 
-        //Text(text = "fname: ${authViewModel.fname}")
-        //Text(text = "lname: ${authViewModel.lname}")
-        //Text(text = "designation: ${authViewModel.designation}")
-        //Text(text = "empid: ${authViewModel.empid}")
+        Text(text = "fname: ${authViewModel.fname}")
+        Text(text = "lname: ${authViewModel.lname}")
+        Text(text = "designation: ${authViewModel.designation}")
+        Text(text = "empid: ${authViewModel.empid}")
 
 
         //Spacer(modifier = Modifier.height(12.dp))

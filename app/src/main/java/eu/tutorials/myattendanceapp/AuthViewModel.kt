@@ -9,8 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
-import java.time.Instant
-import java.util.Date
+
 
 class AuthViewModel : ViewModel() {
 
@@ -47,8 +46,7 @@ class AuthViewModel : ViewModel() {
 
         //For access limitation
         var userName by mutableStateOf("")
-
-
+        // Get SharedPreferences
 
 
         //it create and instance so we can access Firebase authentication
@@ -81,12 +79,14 @@ class AuthViewModel : ViewModel() {
                         _authstate.value = AuthState.Error("Email or password can't be empty")
                         return
                 }
-                userName = email
+
+
                 _authstate.value = AuthState.Loading
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener{task->
                                 if(task.isSuccessful){
                                         _authstate.value = AuthState.Authenticated
+                                        userName = email
                                 }
                                 else
                                 {
