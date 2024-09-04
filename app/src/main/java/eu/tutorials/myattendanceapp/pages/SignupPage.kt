@@ -101,7 +101,7 @@ fun SignupPage(modifier: Modifier = Modifier,
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(onClick = { authViewModel.signup(email, password) },
-                modifier = Modifier.fillMaxWidth().padding(start = 400.dp, top = 20.dp, end = 400.dp))
+                modifier = Modifier.fillMaxWidth().padding(start = 300.dp, top = 20.dp, end = 300.dp))
             {
                 Text(text = "Create an account")
             }

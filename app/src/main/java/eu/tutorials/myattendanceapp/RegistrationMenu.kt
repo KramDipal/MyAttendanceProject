@@ -43,6 +43,15 @@ fun registrationMenu(navController: NavController, authViewModel: AuthViewModel)
     //> Generate Button (save to gallery on clicked)
 
     val context = LocalContext.current
+
+
+    //clear text fields
+    authViewModel.empid = ""
+    authViewModel.fname = ""
+    authViewModel.lname = ""
+    authViewModel.designation = ""
+
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Transparent//Color(0xffb5dbc7)

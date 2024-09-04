@@ -37,11 +37,13 @@ fun MainMenu(modifier: Modifier = Modifier,
     // For user access limitation
     val username = authViewModel.userName.substringBefore("@")
     val adminUser = "kiko1234"
+    val adminUser2 = "admin1234"
     var getUserName: Boolean = false
 
     Log.i("MainMenu", "${authViewModel.userName}, $username")
 
-    if(username.equals(adminUser, ignoreCase = true)){
+    if(username.equals(adminUser, ignoreCase = true) ||
+        username.equals(adminUser2, ignoreCase = true)){
         Log.i("MainMenu", "It's True!!!")
         getUserName = true
     }
