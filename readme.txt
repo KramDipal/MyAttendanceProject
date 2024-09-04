@@ -43,3 +43,7 @@ With Report Menu
 
 09/03/24
 21. Report generator - PDF
+
+09/04/24
+22. Access limitations for non admin user.
+- Disabled buttons.
