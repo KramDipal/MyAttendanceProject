@@ -31,11 +31,23 @@ fun MainMenu(modifier: Modifier = Modifier,
              authViewModel: AuthViewModel){
 
 
-        val authState = authViewModel.authstate.observeAsState()
+    val authState = authViewModel.authstate.observeAsState()
+    val context = LocalContext.current
 
-        val context = LocalContext.current
+    // For user access limitation
+    val username = authViewModel.userName.substringBefore("@")
+    val adminUser = "kiko1234"
+    var getUserName: Boolean = false
 
-    Log.i("Credentials", "Main Menu!")
+    Log.i("MainMenu", "${authViewModel.userName}, $username")
+
+    if(username.equals(adminUser, ignoreCase = true)){
+        Log.i("MainMenu", "It's True!!!")
+        getUserName = true
+    }
+    // For user access limitation
+
+
         LaunchedEffect(authState.value){
             when(authState.value) {
                 is AuthState.Unathenticated -> navController.navigate(Routes.loginpagemenu)
@@ -65,7 +77,8 @@ fun MainMenu(modifier: Modifier = Modifier,
 
             Button(
                 onClick = { navController.navigate(Routes.registration) },
-                modifier = Modifier.fillMaxWidth().padding(start = 300.dp, top = 20.dp, end = 300.dp)//.fillMaxWidth().padding(all = 5.dp)
+                modifier = Modifier.fillMaxWidth().padding(start = 300.dp, top = 20.dp, end = 300.dp),
+                enabled = getUserName//.fillMaxWidth().padding(all = 5.dp)
             ) {
                 Text(text = "Register")
             }
@@ -79,7 +92,8 @@ fun MainMenu(modifier: Modifier = Modifier,
 
             Button(
                 onClick = { navController.navigate(Routes.reportmenu) },
-                modifier = Modifier.fillMaxWidth().padding(start = 300.dp, top = 20.dp, end = 300.dp)//fillMaxWidth().padding(all = 5.dp)
+                modifier = Modifier.fillMaxWidth().padding(start = 300.dp, top = 20.dp, end = 300.dp),
+                enabled = getUserName//fillMaxWidth().padding(all = 5.dp)
             ) {
                 Text(text = "Report")
             }

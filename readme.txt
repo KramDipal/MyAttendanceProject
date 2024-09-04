@@ -40,3 +40,6 @@
 With Report Menu
 19. Added Report menu in which it displays all the logged records in LoginUser table.
 20. With delete button in row.
+
+09/03/24
+21. Report generator - PDF

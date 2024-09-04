@@ -45,6 +45,12 @@ class AuthViewModel : ViewModel() {
         }
 
 
+        //For access limitation
+        var userName by mutableStateOf("")
+
+
+
+
         //it create and instance so we can access Firebase authentication
         private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -75,6 +81,7 @@ class AuthViewModel : ViewModel() {
                         _authstate.value = AuthState.Error("Email or password can't be empty")
                         return
                 }
+                userName = email
                 _authstate.value = AuthState.Loading
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener{task->
