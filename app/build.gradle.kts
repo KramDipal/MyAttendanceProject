@@ -103,8 +103,6 @@ dependencies {
 
 
 
-    //implementation("com.google.accompanist:accompanist-permissions:0.20.0")
-
     /****************/
     val accompanistVersion = "0.30.0"
     implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")

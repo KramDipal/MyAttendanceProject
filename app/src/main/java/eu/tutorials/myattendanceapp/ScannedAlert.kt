@@ -50,7 +50,6 @@ fun ScannedAlert(
     val partThree = parts[2]
     val partFour = parts[3]
 
-
     //Initialize permission
     RequestLocationPermission()
     // to get return string from FetchLocation()

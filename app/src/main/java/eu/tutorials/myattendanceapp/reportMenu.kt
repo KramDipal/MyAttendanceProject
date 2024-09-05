@@ -7,9 +7,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +22,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -45,11 +48,17 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @Composable
 fun reportMenu(navController: NavController,
-               todoViewModel: TodoViewModel){
+               todoViewModel: TodoViewModel,
+               authViewModel: AuthViewModel){
 
     var empID by remember {
         mutableStateOf("")
@@ -58,6 +67,13 @@ fun reportMenu(navController: NavController,
     val todoListAll by todoViewModel.todoListAll.observeAsState()
     val todoListAny by todoViewModel.todoListAny.observeAsState()
     val context = LocalContext.current
+
+    //date picker
+    var fromDate by remember { mutableStateOf<Long?>(null) }
+    var toDate by remember { mutableStateOf<Long?>(null) }
+    //date picker
+
+
 
     Column(
         modifier = Modifier
@@ -87,20 +103,64 @@ fun reportMenu(navController: NavController,
     ) {
         todoListAny?.let {
             Row {
+
+                val getFromDate = DatePickerDialog(
+                    label = "From Date",
+                    selectedDate = fromDate,
+                    onDateSelected = { fromDate = it }
+                )
+                var formattedDate: String? = null
+                if (getFromDate != null) {
+                    formattedDate = formatLongDate(getFromDate)
+                }
+                Log.i("reportMenu/formattedDate","$formattedDate")
+
+
+
+                val getToDate = DatePickerDialog2(
+                    label = "To Date",
+                    selectedDate = toDate,
+                    onDateSelected = { toDate = it }
+                )
+                var formattedDate2: String? = null
+                if (getToDate != null) {
+                    formattedDate2 = formatLongDate(getToDate)
+                }
+                Log.i("reportMenu/formattedDate2","$formattedDate2")
+
+
+
                 Button(onClick = {
+
                     //val filePath = "${context.filesDir}/MyAttendanceApp.csv"
                     //val filePath = "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)}/MyAttendanceApp${System.currentTimeMillis()}.csv"
                     //writeDataToCsv(todoListAny!!, filePath)
                     //Toast.makeText(context, "CSV file created at $filePath", Toast.LENGTH_LONG).show()
+                    //if(authViewModel.fromDate == 0L || authViewModel.toDate == 0L){
+                    //    Toast.makeText(context, "Please select (To) and (From) date", Toast.LENGTH_LONG).show()
+                    //}
+                    //else
+                    //{
 
-                    val filePath = "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)}/MyAttendanceApp${System.currentTimeMillis()}.pdf"
-                    writeDataToPdf(todoListAny!!, filePath)
-                    Toast.makeText(context, "PDF file created at $filePath", Toast.LENGTH_LONG).show()
+                    if (formattedDate != null && formattedDate2 != null)
+                    {
+                        val filePath = "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)}/MyAttendanceApp${System.currentTimeMillis()}.pdf"
+                        writeDataToPdf(todoListAny!!, filePath, formattedDate, formattedDate2)
+
+                        Toast.makeText(context, "PDF file created at $filePath", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "Please select (To) and (From) dates", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    //}
+
                 })
                 {
                     Text(text = "GENERATE REPORT")
                 }
-
                 /*OutlinedTextField(value = empID, onValueChange = { empID = it }, label = {
                     androidx.compose.material3.Text(text = "Employee ID")
                 })
@@ -110,8 +170,8 @@ fun reportMenu(navController: NavController,
 
                 }*/
 
-            }
 
+            }
             LazyColumn(
                 content = {
                     itemsIndexed(it){index: Int, item: LoginUser ->
@@ -123,7 +183,16 @@ fun reportMenu(navController: NavController,
             )
 
          }
+
+
     }
+}
+
+fun formatLongDate(timestamp: Long): String {
+    val instant = Instant.ofEpochMilli(timestamp)
+    val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
+        .withZone(ZoneId.systemDefault())
+    return formatter.format(instant)
 }
 
 @Composable
@@ -164,19 +233,103 @@ fun TodoItem(item : LoginUser,onDelete : ()-> Unit) {
                 //tint = Color.Black
             //)
         }
-        /*
-        IconButton(onClick = onCreate)
-        //modifier = Modifier.size(width = 10.dp, height = 10.dp),
-        //colors = IconButtonDefaults.filledIconButtonColors())
-        {
-            //Icon(
-            Icon(Icons.Filled.Create, contentDescription = "Create CSV")
-            //painter = painterResource(id = R.drawable.delete4),
-            //contentDescription = null
-            //tint = Color.Black
-            //)
-        }
-        */
     }
 
 }
+
+@Composable
+fun DatePickerDialog(
+    label: String,
+    selectedDate: Long?,
+    onDateSelected: (Long) -> Unit
+) : Long?
+{
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+    selectedDate?.let { calendar.timeInMillis = it }
+
+
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    //Log.i("DatePickerDialog/onDateSelected","$selectedDate")
+    //Log.i("DatePickerDialog","$year $month $day")
+
+    val datePickerDialog = android.app.DatePickerDialog(
+        context,
+        { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedCalendar = Calendar.getInstance()
+            selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
+            onDateSelected(selectedCalendar.timeInMillis)
+        },
+        year, month, day
+    )
+
+    OutlinedTextField(
+        value = selectedDate?.let { android.icu.text.SimpleDateFormat(
+            "MM/dd/yyyy",
+            Locale.getDefault()
+        ).format(Date(it)) } ?: "",
+        onValueChange = {},
+        label = { androidx.compose.material3.Text(label) },
+        readOnly = true,
+        trailingIcon = {
+            IconButton(onClick = { datePickerDialog.show() }) {
+                Icon(imageVector = Icons.Default.DateRange, contentDescription = "Select date")
+            }
+        }//,
+        //modifier = Modifier.fillMaxWidth(1f)
+    )
+
+    return selectedDate
+}
+
+@Composable
+fun DatePickerDialog2(
+    label: String,
+    selectedDate: Long?,
+    onDateSelected: (Long) -> Unit
+) : Long?
+{
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+    selectedDate?.let { calendar.timeInMillis = it }
+
+
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    //Log.i("DatePickerDialog/onDateSelected","$selectedDate")
+    //Log.i("DatePickerDialog","$year $month $day")
+
+    val datePickerDialog = android.app.DatePickerDialog(
+        context,
+        { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedCalendar = Calendar.getInstance()
+            selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
+            onDateSelected(selectedCalendar.timeInMillis)
+        },
+        year, month, day
+    )
+
+    OutlinedTextField(
+        value = selectedDate?.let { android.icu.text.SimpleDateFormat(
+            "MM/dd/yyyy",
+            Locale.getDefault()
+        ).format(Date(it)) } ?: "",
+        onValueChange = {},
+        label = { androidx.compose.material3.Text(label) },
+        readOnly = true,
+        trailingIcon = {
+            IconButton(onClick = { datePickerDialog.show() }) {
+                Icon(imageVector = Icons.Default.DateRange, contentDescription = "Select date")
+            }
+        }//,
+        //modifier = Modifier.fillMaxWidth(1f)
+    )
+
+    return selectedDate
+}
+

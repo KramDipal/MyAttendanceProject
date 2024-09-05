@@ -1,48 +1,58 @@
 package eu.tutorials.myattendanceapp
 
+import android.icu.text.SimpleDateFormat
 import android.util.Log
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class AuthViewModel : ViewModel() {
 
 
         //for registration menu
-        //fname
         var fname by mutableStateOf("")
-
         fun onTextChanged(newText: String) {
                 fname = newText
         }
 
-        //lname
         var lname by mutableStateOf("")
-
         fun onTextChanged2(newText: String) {
                 lname = newText
         }
 
-        //designation
         var designation by mutableStateOf("")
-
         fun onTextChanged3(newText: String) {
                 designation = newText
         }
 
-        //empid
         var empid by mutableStateOf("")
-
         fun onTextChanged4(newText: String) {
                 empid = newText
         }
-
 
         //For access limitation
         var userName by mutableStateOf("")
@@ -129,6 +139,73 @@ class AuthViewModel : ViewModel() {
                 Log.i("Credentials", "SignOut!")
                 auth.signOut()
                 _authstate.value = AuthState.Unathenticated
+        }
+
+
+
+
+        //date picker function
+        @Composable
+        fun DateRangePicker() {
+                var fromDate by remember { mutableStateOf<Long?>(null) }
+                var toDate by remember { mutableStateOf<Long?>(null) }
+
+                Column(modifier = Modifier.padding(16.dp)) {
+                        DatePickerDialog(
+                                label = "From Date",
+                                selectedDate = fromDate,
+                                onDateSelected = { fromDate = it }
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        DatePickerDialog(
+                                label = "To Date",
+                                selectedDate = toDate,
+                                onDateSelected = { toDate = it }
+                        )
+                }
+        }
+
+        @Composable
+        fun DatePickerDialog(
+                label: String,
+                selectedDate: Long?,
+                onDateSelected: (Long) -> Unit
+        ) {
+                val context = LocalContext.current
+                val calendar = Calendar.getInstance()
+                selectedDate?.let { calendar.timeInMillis = it }
+
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+
+                Log.i("DatePickerDialog","$year $month $day")
+
+                val datePickerDialog = android.app.DatePickerDialog(
+                        context,
+                        { _, selectedYear, selectedMonth, selectedDay ->
+                                val selectedCalendar = Calendar.getInstance()
+                                selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
+                                onDateSelected(selectedCalendar.timeInMillis)
+                        },
+                        year, month, day
+                )
+
+                OutlinedTextField(
+                        value = selectedDate?.let { SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(
+                                Date(it)
+                        ) } ?: "",
+                        onValueChange = {},
+                        label = { Text(label) },
+                        readOnly = true,
+                        trailingIcon = {
+                                IconButton(onClick = { datePickerDialog.show() }) {
+                                        Icon(imageVector = Icons.Default.DateRange, contentDescription = "Select date")
+                                }
+                        }//,
+                        //modifier = Modifier.fillMaxWidth(1f)
+                )
         }
 
 

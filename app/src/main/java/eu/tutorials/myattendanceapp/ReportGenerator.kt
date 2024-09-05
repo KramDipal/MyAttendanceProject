@@ -10,7 +10,7 @@ import java.io.FileOutputStream
 import java.io.FileWriter
 
 
-fun writeDataToPdf(users: List<LoginUser>, filePath: String) {
+fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, toDate: String) {
     val pdfDocument = PdfDocument()
     val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
     val page = pdfDocument.startPage(pageInfo)
@@ -43,7 +43,7 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String) {
 
 
     var yPosition = 50
-    canvas.drawText("Biweekly Time Sheet",400f, yPosition.toFloat(), paintHeader)
+    canvas.drawText("Biweekly Time Sheet",450f, yPosition.toFloat(), paintHeader)
     yPosition += 30
 
 
@@ -51,16 +51,17 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String) {
     canvas.drawText("MACAU BUBBLE TEA SHOP",5f, yPosition.toFloat(), paintHeader2)
     yPosition += 30
 
-    canvas.drawText("Street Address:         C. RAYMUNDO AVE., MAYBUNGA                                                         Pay period start date:",5f, yPosition.toFloat(), paint)
+    canvas.drawText("Street Address:         C. RAYMUNDO AVE., MAYBUNGA                                                         Pay period start date: $fromDate",5f, yPosition.toFloat(), paint)
     yPosition += 10
 
-    canvas.drawText("Address 2:                     HAMPTON GARDENS ARCADE NORTHWING                             Pay period end date:",5f, yPosition.toFloat(), paint)
+    canvas.drawText("Address 2:                     HAMPTON GARDENS ARCADE NORTHWING                              Pay period end date: $toDate",5f, yPosition.toFloat(), paint)
+    yPosition += 20
+
+
+    canvas.drawText("City, ST  ZIP Code:    PASIG CITY, 1607                                                                                             Employee phone: ",5f, yPosition.toFloat(), paint)
     yPosition += 10
 
-    canvas.drawText("City, ST  ZIP Code:    PASIG CITY, 1607",5f, yPosition.toFloat(), paint)
-    yPosition += 10
-
-    canvas.drawText("Manager:                         FERDILIZA A. LAPID",5f, yPosition.toFloat(), paint)
+    canvas.drawText("Manager:                         FERDILIZA A. LAPID                                                                                         Employee e-mail:",5f, yPosition.toFloat(), paint)
     yPosition += 30
 
     canvas.drawText("_______________________________________________________________________________________________________________",5f, yPosition.toFloat(), paint)
@@ -87,9 +88,9 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String) {
 
     yPosition += 30
     canvas.drawText("Total days worked: \t${countDaysWork}",5f, yPosition.toFloat(), paintHeader3)
-    yPosition += 10
+    yPosition += 15
     canvas.drawText("Rate per day:  Php 500.00",5f, yPosition.toFloat(), paintHeader3)
-    yPosition += 10
+    yPosition += 15
     canvas.drawText("Total pay:  Php \t${countDaysPay}",5f, yPosition.toFloat(), paintHeader3)
     yPosition += 50
 
