@@ -57,3 +57,30 @@ Added:
 - saveParameterValue
 - getParameterValue
 - to save last logged-in user to retain button limitation per user access.
+
+
+
+
+09/06/24 >>> Enhancement 04
+28. Added in Todo.kt
+@ColumnInfo(defaultValue = "hh:mm:ss") var createdTime: String
+- new column createdTime
+
+29. added in build.gradle
+        //to save the schema to directory
+        //D:\Kiko Installers\github_projects\MyAttendanceProject\app\schemas\eu.tutorials.myattendanceapp.db.TodoDatabase
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
+        }
+30. Added In TodoDatabase
+
+//need for adding new column to table
+@database(entities = [Todo::class, LoginUser::class], version = 2, exportSchema = true,
+    autoMigrations = [AutoMigration(from = 1, to = 2)])
+31. Arrange column in ReportGenerator.kt
+ - added separate date and time logged column
+
+32. Added new createdTime in reportMenu.kt
+33. Added formatter in ScannedAlert.kt
