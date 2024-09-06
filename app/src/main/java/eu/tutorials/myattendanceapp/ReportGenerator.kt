@@ -4,6 +4,7 @@ package eu.tutorials.myattendanceapp
 import android.graphics.Paint
 import android.os.Environment
 import android.graphics.pdf.PdfDocument
+import android.util.Log
 import com.opencsv.CSVWriter
 import java.io.File
 import java.io.FileOutputStream
@@ -58,30 +59,42 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
     yPosition += 20
 
 
-    canvas.drawText("City, ST  ZIP Code:    PASIG CITY, 1607                                                                                             Employee phone: ",5f, yPosition.toFloat(), paint)
+    canvas.drawText("City, ST  ZIP Code:    PASIG CITY, 1607                                                                                              Employee phone: ",5f, yPosition.toFloat(), paint)
     yPosition += 10
 
-    canvas.drawText("Manager:                         FERDILIZA A. LAPID                                                                                         Employee e-mail:",5f, yPosition.toFloat(), paint)
+    canvas.drawText("Manager:                         FERDILIZA A. LAPID                                                                                          Employee e-mail:",5f, yPosition.toFloat(), paint)
     yPosition += 30
 
     canvas.drawText("_______________________________________________________________________________________________________________",5f, yPosition.toFloat(), paint)
     yPosition += 20
 
-    canvas.drawText("No.                        Date Logged                                                              Employee name            Employee ID                  Overtime Hour/s",5f, yPosition.toFloat(), paint)
+    canvas.drawText("No.                 Date Logged                             Time Logged             Employee name            Employee ID             Overtime Hour/s",5f, yPosition.toFloat(), paint)
     yPosition += 20
 
     for (LoginUser in users)
     {
 
-        canvas.drawText("${count}\t                             ${LoginUser.createdAt}\t                 ${LoginUser.fname}\t                         ${LoginUser.empid}        ",5f, yPosition.toFloat(),
+
+        //if date equal then subtract time
+        //if(LoginUser.dDate == LoginUser.dDate){
+        //    Log.i("LoginUser", "Are Equal")
+        //}
+
+        canvas.drawText("${count}\t        ${LoginUser.createdAt}\t          ${LoginUser.createdTime}\t                             ${LoginUser.fname}\t                                 ${LoginUser.empid}",
+                    5f,
+            yPosition.toFloat(),
             paint)
+
             yPosition += 10
 
         count++
     }
 
+    //Hour worked computation
     countDaysWork = count/2
     countDaysPay = (countDaysWork * 500).toDouble()
+    //Hour worked computation
+
 
     yPosition += 15
     canvas.drawText("_______________________________________________________________________________________________________________",5f, yPosition.toFloat(), paint)
@@ -142,7 +155,8 @@ fun writeDataToCsv(User: List<LoginUser>, filePath: String) {
     writer.writeNext(header7)
 
     for (LoginUser in User) {
-        val data = arrayOf(LoginUser.createdAt, LoginUser.fname, LoginUser.lname)
+        //val data = arrayOf(LoginUser.createdAt, LoginUser.fname, LoginUser.lname)
+        val data = arrayOf(LoginUser.fname, LoginUser.lname)
 
         writer.writeNext(data)
     }

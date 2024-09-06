@@ -19,12 +19,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ButtonColors
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -42,7 +44,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
@@ -101,6 +106,16 @@ fun reportMenu(navController: NavController,
             .fillMaxHeight()
             .padding(4.dp)
     ) {
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(text = "SELECT DATE",
+            color = Color.LightGray,
+            fontSize = 30.sp,
+            letterSpacing = 5.sp,
+            textDecoration = TextDecoration.Underline,
+            lineHeight = 5.sp,
+            fontWeight = FontWeight.Bold)
+
         todoListAny?.let {
             Row {
 
@@ -157,9 +172,19 @@ fun reportMenu(navController: NavController,
                     }
                     //}
 
-                })
+                },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.LightGray, // Background color
+                        contentColor = Color.White, // Text color
+                        disabledContainerColor = Color.Gray, // Background color when disabled
+                        disabledContentColor = Color.LightGray // Text color when disabled
+                    )
+                )
                 {
-                    Text(text = "GENERATE REPORT")
+                    Text(text = "GENERATE REPORT",
+                        color = Color.Magenta,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
                 /*OutlinedTextField(value = empID, onValueChange = { empID = it }, label = {
                     androidx.compose.material3.Text(text = "Employee ID")
@@ -172,6 +197,9 @@ fun reportMenu(navController: NavController,
 
 
             }
+
+            Spacer(modifier = Modifier.height(6.dp))
+
             LazyColumn(
                 content = {
                     itemsIndexed(it){index: Int, item: LoginUser ->
@@ -219,7 +247,9 @@ fun TodoItem(item : LoginUser,onDelete : ()-> Unit) {
             Text(text = "Designation:   ${item.designation}",fontSize = 16.sp,color = Color.White)
             Text(text = "Latitude:      ${item.latitude}",fontSize = 16.sp,color = Color.White)
             Text(text = "Longitute:     ${item.longitude}",fontSize = 16.sp,color = Color.White)
-            Text(text = "Date Created:  ${item.createdAt}",fontSize = 16.sp,color = Color.White)
+            Text(text = "Date / Time Logged:  ${item.createdAt}  ${item.createdTime}",fontSize = 16.sp,color = Color.White)
+            //Text(text = "Time Logged:  ${item.createdTime}",fontSize = 16.sp,color = Color.White)
+            //Text(text = "Date Created:  ${item.timelog}",fontSize = 16.sp,color = Color.White)
 
         }
         IconButton(onClick = onDelete)

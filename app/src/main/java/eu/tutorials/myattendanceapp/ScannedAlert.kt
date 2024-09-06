@@ -31,7 +31,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.google.android.gms.location.LocationServices
+import java.time.Clock
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 @Composable
@@ -59,7 +64,29 @@ fun ScannedAlert(
     val longLocOne = latloc[1]
 
     //get current date/time
-    val currentDateTime = LocalDateTime.now()
+    val currentDateTime = LocalDateTime.now().toString()
+    //val dDate = currentDateTime.substring(0,10)
+    //val dTime = currentDateTime.substring(11)
+    val year = LocalDateTime.now().year
+    val month = LocalDateTime.now().monthValue
+    val day = LocalDateTime.now().dayOfMonth
+    //val hour = LocalDateTime.now().hour
+    //val minute = LocalDateTime.now().minute
+    //val second = LocalDateTime.now().second
+
+    val dateX = LocalDate.of(year, month, day)
+    val timeX = LocalTime.now()
+
+    val formatTime = DateTimeFormatter.ofPattern("HH:mm:ss")
+    val formattedTime = timeX.format(formatTime)
+    Log.i("DATES/address-formattedTime", formattedTime)
+
+    // Define the formatter to include the day of the week
+    val formatDate = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy", Locale.ENGLISH)
+    val formattedDate = dateX.format(formatDate)
+    Log.i("DATES/address-formattedDate", formattedDate)
+
+
 
     //get the exact address without the lat and long
     var address: String? = null
@@ -69,8 +96,7 @@ fun ScannedAlert(
     if (startidx >= 0 && endidx <= location.length) {
         address = location.substring(startidx, endidx)
     }
-    Log.i("Address/address-kiko", "${address}")
-    Log.i("Address/currentDateTime-kiko", "${currentDateTime}")
+    //Log.i("Address/address-kiko", "$address")
     //get the exact address without the lat and long
 
 
@@ -87,23 +113,12 @@ fun ScannedAlert(
 
     //For Email
     val fEmail = isEmailClientInstalled(context)
-    /*
-    val bitmap = getBitmapFromDrawable(context, R.drawable.goodday2)
-    val file = saveBitmapToFile(context, bitmap, "image.png")
-
-    if(!fEmail){
-        Toast.makeText(context, "No email client found", Toast.LENGTH_SHORT).show()
-    }*/
     Log.i("ScannedAlert/fEmail", "${fEmail}")
     //For Email
 
 
-
-
     Log.i("ScannedAlert/location", "${latlocOne} ${longLocOne}")
     Log.i("ScannedAlert:Code", "${partOne} ${partTwo} ${partThree} ${partFour}")
-
-
 
 
     AlertDialog(
@@ -133,7 +148,11 @@ fun ScannedAlert(
                         partThree,
                         partFour,
                         latlocOne,
-                        longLocOne
+                        longLocOne,
+                        formattedDate,
+                        formattedTime
+                        // currentDateTime.toString()
+
                     )
 
                     try
@@ -146,7 +165,8 @@ fun ScannedAlert(
                                 "francis.lapid@yahoo.com",
                                 "Daily Time logger",
                                 "Greetings, \n\n" +
-                                        "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime} to a device located at ${location}." +
+                                        //"MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime} to a device located at ${location}." +
+                                        "MBT Attendance Alert employee $partOne has logged-in at $formattedDate $formattedTime to a device located at ${location}." +
                                         "\n\nThis is an AI generated email PLEASE DO NOT REPLY to this message." +
                                         "\n\nAdmin")
 
@@ -173,14 +193,18 @@ fun ScannedAlert(
                     partThree,
                     partFour,
                     latlocOne,
-                    longLocOne
+                    longLocOne,
+                    formattedDate,
+                    formattedTime
+                    //currentDateTime.toString()
                 )
 
                 try{
                     sendSMSPermissionLauncher.launch(Manifest.permission.SEND_SMS)
                     val smsManager: SmsManager = SmsManager.getDefault()
 
-                    smsManager.sendTextMessage("+639175736952", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
+                    //smsManager.sendTextMessage("+639175736952", null, "MBT Attendance Alert employee ${partOne} has logged-in at ${currentDateTime}", null, null)
+                    smsManager.sendTextMessage("+639175736952", null, "MBT Attendance Alert employee $partOne has logged-in at $formattedDate $formattedTime", null, null)
                     smsManager.sendTextMessage("+639175736952", null, "to a device located at ${location}.  PLEASE DO NOT REPLY to this message.", null, null)
 /*
                     //Honey phone number

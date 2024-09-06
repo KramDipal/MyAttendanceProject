@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
     id("kotlin-kapt")
+
 }
 
 android {
@@ -20,6 +21,16 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        //to save the schema to directory
+        //D:\Kiko Installers\github_projects\MyAttendanceProject\app\schemas\eu.tutorials.myattendanceapp.db.TodoDatabase
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
+        }
+
+
     }
 
     buildTypes {

@@ -31,7 +31,7 @@ interface TodoDao {
     @Query("Select * from LoginUser where empid = :empID ORDER BY createdAt DESC")
     fun selectTodoAnyLoginUser(empID : String):LiveData<List<LoginUser>>
 
-    @Query("SELECT * FROM LoginUser ORDER BY createdAt DESC")
+    @Query("SELECT * FROM LoginUser ORDER BY createdAt ASC")
     fun getAllTodoLogUser() : LiveData<List<LoginUser>>
 
     @Query("DELETE FROM LoginUser where id = :id")

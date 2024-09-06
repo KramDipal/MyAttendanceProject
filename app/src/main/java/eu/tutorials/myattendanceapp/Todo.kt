@@ -1,5 +1,6 @@
 package eu.tutorials.myattendanceapp
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -29,7 +30,11 @@ data class LoginUser(
     var empid: String,
     var latitude: String,
     var longitude: String,
-    var createdAt: String
+    //var datelog: String
+    //var timelog: String
+    var createdAt: String,
+    @ColumnInfo(defaultValue = "hh:mm:ss") var createdTime: String
+    //This error occurs because Room requires a default value for new NOT NULL columns when adding them to an existing table
 )
 
 

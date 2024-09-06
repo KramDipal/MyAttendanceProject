@@ -60,12 +60,12 @@ class TodoViewModel :ViewModel() {
     fun addLoginUser(
         fname: String, lname: String,
         designation: String, empid: String,
-        lati: String, longi: String
+        lati: String, longi: String, dDate: String, dTime: String
     ){
 
 
        Log.i("Kiko/addLoginUser","${fname}, ${lname}, " +
-                "${designation}, ${empid}, ${Date()}")
+                "${designation}, ${empid}")
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.addLoginUser(
                 LoginUser(
@@ -75,7 +75,9 @@ class TodoViewModel :ViewModel() {
                     empid = empid,
                     latitude = lati,
                     longitude = longi,
-                    createdAt = Date().toString()
+                    createdAt = dDate,//Date().toString()
+                    createdTime = dTime
+                    //createdAt = dDate
                     ))
         }
     }
