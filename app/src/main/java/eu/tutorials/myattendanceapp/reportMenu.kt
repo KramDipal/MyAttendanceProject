@@ -4,32 +4,24 @@ import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
@@ -43,17 +35,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
-import java.text.SimpleDateFormat
+import java.time.Duration
 import java.time.Instant
+import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -247,7 +236,11 @@ fun TodoItem(item : LoginUser,onDelete : ()-> Unit) {
             Text(text = "Designation:   ${item.designation}",fontSize = 16.sp,color = Color.White)
             Text(text = "Latitude:      ${item.latitude}",fontSize = 16.sp,color = Color.White)
             Text(text = "Longitute:     ${item.longitude}",fontSize = 16.sp,color = Color.White)
-            Text(text = "Date / Time Logged:  ${item.createdAt}  ${item.createdTime}",fontSize = 16.sp,color = Color.White)
+            Text(text = "Date / Time Logged In and Out:  ${item.createdAt}  | ${item.createdTime} | ${item.createdTimeOut}",fontSize = 16.sp,color = Color.White)
+
+            val timeDiff = timeFormatterX(item.createdTime, item.createdTimeOut)
+
+            Text(text = "Time Difference:   $timeDiff", fontSize = 16.sp,color = Color.White)
             //Text(text = "Time Logged:  ${item.createdTime}",fontSize = 16.sp,color = Color.White)
             //Text(text = "Date Created:  ${item.timelog}",fontSize = 16.sp,color = Color.White)
 
@@ -362,4 +355,5 @@ fun DatePickerDialog2(
 
     return selectedDate
 }
+
 

@@ -76,7 +76,8 @@ class TodoViewModel :ViewModel() {
                     latitude = lati,
                     longitude = longi,
                     createdAt = dDate,//Date().toString()
-                    createdTime = dTime
+                    createdTime = dTime,
+                    createdTimeOut = "hh:mm:ss"
                     //createdAt = dDate
                     ))
         }
@@ -91,6 +92,12 @@ class TodoViewModel :ViewModel() {
     fun selectTodoAnyLoginUser(empid : String){
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.selectTodoAnyLoginUser(empid)
+        }
+    }
+
+    fun updateLoginUser(empid: String, createdAt: String, createdTimeOut: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            todoDao.updateLoginUserId(empid, createdAt, createdTimeOut)
         }
     }
     //for logged in Users

@@ -44,7 +44,9 @@ fun MyAppNavigation(modifier: Modifier = Modifier,
             composable(Routes.logmemenu){
                 logmeMenu(navController, todoViewModel)
             }
-
+            composable(Routes.logmemenuout){
+                logmeMenuOut(navController, todoViewModel)
+            }
             composable(Routes.reportmenu){
                 reportMenu(navController, todoViewModel, authViewModel)
             }

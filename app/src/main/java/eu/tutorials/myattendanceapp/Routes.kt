@@ -10,6 +10,7 @@ object Routes {
     var registration = "RegistrationMenu"
     var saveregister = "SaveRegister"  // save registered account here
     var logmemenu = "LogMeMenu"
+    var logmemenuout = "LogMeMenuOut"
     var displaygeneratedqrcode = "DisplayGeneratedQRcode"
 
 

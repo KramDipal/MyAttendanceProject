@@ -28,7 +28,7 @@ interface TodoDao {
     @Insert
     fun addLoginUser(todo : LoginUser)
 
-    @Query("Select * from LoginUser where empid = :empID ORDER BY createdAt DESC")
+    @Query("Select * from LoginUser where empid = :empID ORDER BY createdTime DESC")
     fun selectTodoAnyLoginUser(empID : String):LiveData<List<LoginUser>>
 
     @Query("SELECT * FROM LoginUser ORDER BY createdAt ASC")
@@ -37,5 +37,11 @@ interface TodoDao {
     @Query("DELETE FROM LoginUser where id = :id")
     fun deleteTodoLog(id : Int)
     //LoginUser table
+
+
+
+    //Update table where empid = empid and createDate = createDate (current date)
+    @Query("UPDATE LoginUser SET createdTimeOut = :createdTimeOut WHERE empId = :empID and createdAt = :createdAt")
+    fun updateLoginUserId(empID: String, createdAt: String, createdTimeOut: String)
 
 }

@@ -11,8 +11,11 @@ import eu.tutorials.myattendanceapp.Todo
 //@Database(entities = [Todo1::class, LoginUser::class], version = 1)
 
 // need for adding new column to table
-@Database(entities = [Todo::class, LoginUser::class], version = 2, exportSchema = true,
-    autoMigrations = [AutoMigration(from = 1, to = 2)])
+//@Database(entities = [Todo::class, LoginUser::class], version = 2, exportSchema = true,
+//    autoMigrations = [AutoMigration(from = 1, to = 2)])
+
+@Database(entities = [Todo::class, LoginUser::class], version = 3, exportSchema = true,
+    autoMigrations = [AutoMigration(from = 2, to = 3)])
 
 @TypeConverters(Converters::class)
 abstract class TodoDatabase : RoomDatabase() {

@@ -9,6 +9,9 @@ import com.opencsv.CSVWriter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.FileWriter
+import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.LocalTime
 
 
 fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, toDate: String) {
@@ -65,22 +68,19 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
     canvas.drawText("Manager:                         FERDILIZA A. LAPID                                                                                          Employee e-mail:",5f, yPosition.toFloat(), paint)
     yPosition += 30
 
-    canvas.drawText("_______________________________________________________________________________________________________________",5f, yPosition.toFloat(), paint)
+    canvas.drawText("____________________________________________________________________________________________________________________",5f, yPosition.toFloat(), paint)
     yPosition += 20
 
-    canvas.drawText("No.                 Date Logged                             Time Logged             Employee name            Employee ID             Overtime Hour/s",5f, yPosition.toFloat(), paint)
+    canvas.drawText("No.                 Date Logged                                       Time Logged             Employee name            Employee ID           Overtime Hour/s",5f, yPosition.toFloat(), paint)
     yPosition += 20
 
-    for (LoginUser in users)
+
+
+    for (i in users)
     {
+        val timeDiff = timeFormatterX(i.createdTime, i.createdTimeOut)
 
-
-        //if date equal then subtract time
-        //if(LoginUser.dDate == LoginUser.dDate){
-        //    Log.i("LoginUser", "Are Equal")
-        //}
-
-        canvas.drawText("${count}\t        ${LoginUser.createdAt}\t          ${LoginUser.createdTime}\t                             ${LoginUser.fname}\t                                 ${LoginUser.empid}",
+        canvas.drawText("${count}\t        ${i.createdAt}\t        ${i.createdTime}\t  | ${i.createdTimeOut}                  ${i.fname}\t                             ${i.empid}                    $timeDiff",
                     5f,
             yPosition.toFloat(),
             paint)
@@ -97,7 +97,7 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
 
 
     yPosition += 15
-    canvas.drawText("_______________________________________________________________________________________________________________",5f, yPosition.toFloat(), paint)
+    canvas.drawText("____________________________________________________________________________________________________________________",5f, yPosition.toFloat(), paint)
 
     yPosition += 30
     canvas.drawText("Total days worked: \t${countDaysWork}",5f, yPosition.toFloat(), paintHeader3)
@@ -162,4 +162,11 @@ fun writeDataToCsv(User: List<LoginUser>, filePath: String) {
     }
 
     writer.close()
+}
+
+//convert date to long
+fun convertTimeToLong(timeString: String): Long {
+    val format = SimpleDateFormat("HH:mm:ss")
+    val date = format.parse(timeString)
+    return date.time
 }

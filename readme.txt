@@ -84,3 +84,21 @@ Added:
 
 32. Added new createdTime in reportMenu.kt
 33. Added formatter in ScannedAlert.kt
+
+
+09/09/24
+Added:
+
+34. TodoDatabase
+ - new column createdTimeOut to compute time difference for Overtime...
+
+35.  TodoDao
+- Added update query function. to update emp timeout based on same date time/logged-in
+
+36. TodoDatabase
+- Update the version control to from :2 to :3
+
+37. Added button LogMeMenuOut to support timeout.
+38. Adjust report generator for the PDF report and include time difference
+39. Added time difference and createdTimeOut  for display
+40. Added ScannedAlert2 to support timeout UI

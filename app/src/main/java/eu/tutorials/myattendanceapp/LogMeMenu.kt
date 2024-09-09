@@ -3,6 +3,7 @@ package eu.tutorials.myattendanceapp
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
 import android.util.Size
 import androidx.activity.ComponentActivity
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -136,21 +138,22 @@ fun logmeMenu(navController: NavController,
                 modifier = Modifier.weight(1f)
             )
             Log.i("Credentials/logmemenu-DDD", code)
-            /*Text(
+            Text(
 
-                text = code,
+                text = "SCAN QRCODE to LOG-IN",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(32.dp)
+                    .padding(32.dp),
+                textAlign = TextAlign.Center
 
-            )*/
+            )
             if(code != "") {
                 Log.i("Credentials/logmemenu-EEE", code)
                 ScannedAlert(code = code,
                     onDismiss = {code = ""},
-                    todoViewModel = TodoViewModel(),
+                    todoViewModel,
                     navController
                     )
             }
