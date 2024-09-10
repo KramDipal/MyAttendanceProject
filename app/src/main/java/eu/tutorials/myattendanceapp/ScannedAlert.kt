@@ -50,10 +50,10 @@ fun ScannedAlert(
     val openDialog = remember { mutableStateOf(false) }
     
     val parts = code.split(" ")
-    val partOne = parts[0]
-    val partTwo = parts[1]
-    val partThree = parts[2]
-    val partFour = parts[3]
+    val partOne = parts[0]      // fname
+    val partTwo = parts[1]      //lname
+    val partThree = parts[2]    //designation
+    val partFour = parts[3]     //empid
 
     //Initialize permission
     RequestLocationPermission()

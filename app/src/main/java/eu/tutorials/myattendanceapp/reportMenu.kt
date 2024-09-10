@@ -200,7 +200,19 @@ fun reportMenu(navController: NavController,
             )
 
          }
-
+        
+        Button(onClick = {navController.navigate(Routes.mainmenu) },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.LightGray, // Background color
+                contentColor = Color.White, // Text color
+                disabledContainerColor = Color.Gray, // Background color when disabled
+                disabledContentColor = Color.LightGray // Text color when disabled
+            ))
+        {
+            Text(text = "BACK TO MAIN MENU",
+                color = Color.Magenta,
+                fontWeight = FontWeight.Bold)
+        }
 
     }
 }
@@ -238,9 +250,16 @@ fun TodoItem(item : LoginUser,onDelete : ()-> Unit) {
             Text(text = "Longitute:     ${item.longitude}",fontSize = 16.sp,color = Color.White)
             Text(text = "Date / Time Logged In and Out:  ${item.createdAt}  | ${item.createdTime} | ${item.createdTimeOut}",fontSize = 16.sp,color = Color.White)
 
-            val timeDiff = timeFormatterX(item.createdTime, item.createdTimeOut)
+            Log.i("reportMenu/timeFormatterX","$item.createdTime $item.createdTimeOut")
 
-            Text(text = "Time Difference:   $timeDiff", fontSize = 16.sp,color = Color.White)
+            if(item.createdTimeOut != "hh:mm:ss") {
+
+                val timeDiff = timeFormatterX(item.createdTime, item.createdTimeOut)
+                val parts = timeDiff.split(":")
+                Text(text = "Time Difference:   $timeDiff", fontSize = 16.sp,color = Color.White)
+            }
+
+
             //Text(text = "Time Logged:  ${item.createdTime}",fontSize = 16.sp,color = Color.White)
             //Text(text = "Date Created:  ${item.timelog}",fontSize = 16.sp,color = Color.White)
 

@@ -53,11 +53,14 @@ fun MainMenu(modifier: Modifier = Modifier,
 
     // Time-IN/OUT option
     var hour = LocalDateTime.now().hour
-    var btnEnableIn: Boolean = false
-    var btnEnableOut: Boolean = false
+    var minutes = LocalDateTime.now().minute
+
+    //make it mutable so toggle will work for refresh button.
+    var btnEnableIn by remember { mutableStateOf(false) }
+    var btnEnableOut by remember { mutableStateOf(false) }
     //var isTimeInVisible by remember { mutableStateOf(false) }
     //var isTimeOutVisible by remember { mutableStateOf(false) }
-    Log.i("MainMenu/hour:","$hour")
+
 
     if(hour < 13){
         btnEnableIn = true
@@ -69,11 +72,12 @@ fun MainMenu(modifier: Modifier = Modifier,
         //isTimeOutVisible = true
     }
 
-    //btnEnableIn = true
-    //btnEnableOut = true
-    // Time-IN/OUT option
+    Log.i("MainMenu/hour:","$hour $minutes")
+
+    //AutoRefreshScreen()
 
 
+    Log.i("MainMenu/btnEnableOut:","$btnEnableOut")
     Log.i("MainMenu", "${authViewModel.userName}, username: $username, getSaveUsernameX: $getSaveUsernameX")
 
     if(username.equals(adminUser, ignoreCase = true) ||
@@ -113,9 +117,11 @@ fun MainMenu(modifier: Modifier = Modifier,
             )
 
 
+
             Button(
                 onClick = { navController.navigate(Routes.registration) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(start = 300.dp, top = 10.dp, end = 300.dp),
                 enabled = getUserName//.fillMaxWidth().padding(all = 5.dp)
             ) {
@@ -125,47 +131,81 @@ fun MainMenu(modifier: Modifier = Modifier,
             //Row() {
 
 
-                Button(
-                    onClick = { //isTimeInVisible = !isTimeInVisible
-                                navController.navigate(Routes.logmemenu) },
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(start = 300.dp, top = 10.dp, end = 300.dp),
-                    //modifier = Modifier.alpha(if (isTimeInVisible) 1f else 0f),
-                    enabled = btnEnableIn
-                ) {
-                    Text(text = "Log me In")
-                }
+            Button(
+                onClick = { //isTimeInVisible = !isTimeInVisible
+                    navController.navigate(Routes.logmemenu)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 300.dp, top = 10.dp, end = 300.dp),
+                //modifier = Modifier.alpha(if (isTimeInVisible) 1f else 0f),
+                enabled = btnEnableIn
+            ) {
+                Text(text = "Log me In")
+            }
 
-                Button(
-                    onClick = {
-                        //isTimeOutVisible = !isTimeOutVisible
-                        navController.navigate(Routes.logmemenuout) },
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(start = 300.dp, top = 10.dp, end = 300.dp),
-                        //modifier = Modifier.alpha(if (isTimeOutVisible) 1f else 0f),
-                    enabled = btnEnableOut
-                ) {
-                    Text(text = "Log me Out")
-                }
+            Button(
+                onClick = {
+                    //isTimeOutVisible = !isTimeOutVisible
+                    navController.navigate(Routes.logmemenuout)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 300.dp, top = 10.dp, end = 300.dp),
+                //modifier = Modifier.alpha(if (isTimeOutVisible) 1f else 0f),
+                enabled = btnEnableOut
+            ) {
+                Text(text = "Log me Out")
+            }
             //}
 
             Button(
                 onClick = { navController.navigate(Routes.reportmenu) },
-                modifier = Modifier.fillMaxWidth().padding(start = 300.dp, top = 10.dp, end = 300.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 300.dp, top = 10.dp, end = 300.dp),
                 enabled = getUserName//fillMaxWidth().padding(all = 5.dp)
             ) {
                 Text(text = "Report")
             }
 
-            Button(
-                onClick = { authViewModel.signout() },
-                modifier = Modifier.fillMaxWidth().padding(start = 300.dp, top = 10.dp, end = 300.dp)//fillMaxWidth().padding(all = 5.dp)
-            ) {
-                Text(text = "Sign Out")
-            }
+            Row() {
+                Button(
+                    onClick = { authViewModel.signout() }
+                    /*modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 300.dp,
+                            top = 10.dp,
+                            end = 300.dp
+                        )*///fillMaxWidth().padding(all = 5.dp)
+                ) {
+                    Text(text = "Sign Out")
+                }
 
+                //custom button with composable content
+                //CustomButton { RefreshButtonScreen() }/*{ AutoRefreshScreen() }*/
+                Button(onClick =
+                {
+                    var hourX = LocalDateTime.now().hour
+                    var minutesX = LocalDateTime.now().minute
+
+                    Log.i("MainMenu/hour >= 15 && minutes >= 25:","$hourX $minutes")
+                    //if(hourX >= 19 && minutesX >= 19)
+                    if(hourX >= 23)
+                    {
+                        btnEnableOut = true
+                    }
+                })
+                {
+                    Text(text = "Refresh")
+                }
+
+            }
         }
+
     }
+
 
 
 }

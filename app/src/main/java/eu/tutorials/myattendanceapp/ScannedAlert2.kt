@@ -141,7 +141,8 @@ fun ScannedAlert2(
             Button(
                 onClick = {
                     //Log.i("ScannedAlert:onClick", "${partOne} ${partTwo} ${partThree} ${partFour}")
-                    todoViewModel.updateLoginUser("000005", formattedDate, formattedTime)
+                    //todoViewModel.updateLoginUser("000005", formattedDate, formattedTime)
+                    todoViewModel.updateLoginUser(partFour, formattedDate, formattedTime)
                     try
                     {
                         if(fEmail){
@@ -173,7 +174,8 @@ fun ScannedAlert2(
         },
         dismissButton = {
             Button(onClick = {
-                todoViewModel.updateLoginUser("000005", formattedDate, formattedTime)
+                //todoViewModel.updateLoginUser("000005", formattedDate, formattedTime)
+                todoViewModel.updateLoginUser(partFour, formattedDate, formattedTime)
 
                 try{
                     sendSMSPermissionLauncher.launch(Manifest.permission.SEND_SMS)
