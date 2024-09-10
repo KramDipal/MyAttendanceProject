@@ -102,3 +102,14 @@ Added:
 38. Adjust report generator for the PDF report and include time difference
 39. Added time difference and createdTimeOut  for display
 40. Added ScannedAlert2 to support timeout UI
+
+09/10/24
+41. MainMenu
+- added refresh condition for timeout button
+42. reportMenu
+- added back to main menu button
+43. ScannedAlert2
+- removed harcoded empid for update condtion
+- replaced with partFour variable
+44. Added CustomButton for composable function
+- for learning...
