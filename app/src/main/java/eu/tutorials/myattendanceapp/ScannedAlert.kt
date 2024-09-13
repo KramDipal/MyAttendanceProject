@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -86,6 +87,10 @@ fun ScannedAlert(
     val formattedDate = dateX.format(formatDate)
     Log.i("DATES/address-formattedDate", formattedDate)
 
+    //09/13/24
+    val todoLoggedInUserQuery by todoViewModel.todoLoggedInUserQuery.observeAsState()
+    Log.i("ScannedAlert/todoLoggedInUserQuery", "${todoLoggedInUserQuery}")
+    //09/13/24
 
 
     //get the exact address without the lat and long
@@ -140,20 +145,32 @@ fun ScannedAlert(
         confirmButton = {
             Button(
                 onClick = {
-                    //Log.i("ScannedAlert:onClick", "${partOne} ${partTwo} ${partThree} ${partFour}")
 
-                    todoViewModel.addLoginUser(
-                        partOne,
-                        partTwo,
-                        partThree,
-                        partFour,
-                        latlocOne,
-                        longLocOne,
-                        formattedDate,
-                        formattedTime
-                        // currentDateTime.toString()
 
-                    )
+                    //09/13/24
+                    // Check if todoLoggedInUserQuery isNullOrEmpty
+                    //then add new record to table
+                    if(todoLoggedInUserQuery.isNullOrEmpty()){
+                        Log.i("todoLoggedInUserQuery","EMPTY!")
+                        todoViewModel.addLoginUser(
+                            partOne,
+                            partTwo,
+                            partThree,
+                            partFour,
+                            latlocOne,
+                            longLocOne,
+                            formattedDate,
+                            formattedTime
+                            //currentDateTime.toString()
+                        )
+
+                    }
+                    else{
+                        //update userID record if not empty
+                        Log.i("todoLoggedInUserQuery","NOT EMPTY! >> $partFour $formattedTime $formattedDate")
+                        todoViewModel.updateLoggedInUser(partFour, formattedTime, formattedDate)
+                    }
+
 
                     try
                     {
@@ -187,17 +204,30 @@ fun ScannedAlert(
         dismissButton = {
             Button(onClick = {
 
-                todoViewModel.addLoginUser(
-                    partOne,
-                    partTwo,
-                    partThree,
-                    partFour,
-                    latlocOne,
-                    longLocOne,
-                    formattedDate,
-                    formattedTime
-                    //currentDateTime.toString()
-                )
+                //09/13/24
+                // Check if todoLoggedInUserQuery isNullOrEmpty
+                if(todoLoggedInUserQuery.isNullOrEmpty()){
+                    Log.i("todoLoggedInUserQuery","EMPTY!")
+                    todoViewModel.addLoginUser(
+                        partOne,
+                        partTwo,
+                        partThree,
+                        partFour,
+                        latlocOne,
+                        longLocOne,
+                        formattedDate,
+                        formattedTime
+                        //currentDateTime.toString()
+                    )
+
+                }
+                else{
+                    //update userID record if not empty
+                    Log.i("todoLoggedInUserQuery","NOT EMPTY! >> $partFour $formattedTime $formattedDate")
+                    todoViewModel.updateLoggedInUser(partFour, formattedTime, formattedDate)
+                }
+
+
 
                 try{
                     sendSMSPermissionLauncher.launch(Manifest.permission.SEND_SMS)

@@ -20,6 +20,7 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
     val page = pdfDocument.startPage(pageInfo)
     val canvas = page.canvas
 
+    var timeDiff: String?
 
     var count: Int = 1
     var countDaysWork: Int = 0
@@ -78,7 +79,13 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
 
     for (i in users)
     {
-        val timeDiff = timeFormatterX(i.createdTime, i.createdTimeOut)
+        //to fix system crash in attempt to generate a report but still without timeout from user.
+        if(i.createdTimeOut != "hh:mm:ss") {
+            timeDiff = timeFormatterX(i.createdTime, i.createdTimeOut)
+        }
+        else{
+            timeDiff = "hh:mm:ss"
+        }
 
         canvas.drawText("${count}\t        ${i.createdAt}\t        ${i.createdTime}\t  | ${i.createdTimeOut}                  ${i.fname}\t                             ${i.empid}                    $timeDiff",
                     5f,

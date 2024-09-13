@@ -8,9 +8,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
+import java.util.Locale
 
 class TodoViewModel :ViewModel() {
+
+
+    // Define the formatter to include the day of the week
+    //09/13/24
+    val year = LocalDateTime.now().year
+    val month = LocalDateTime.now().monthValue
+    val day = LocalDateTime.now().dayOfMonth
+    val dateX = LocalDate.of(year, month, day)
+    val formatDate = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy", Locale.ENGLISH)
+    val formattedDate = dateX.format(formatDate)
+    //09/13/24
 
     //Access DB
     val todoDao = AttendanceApp.todoDatabase.getTodoDao()
@@ -19,6 +34,9 @@ class TodoViewModel :ViewModel() {
     val todoListAll : LiveData<List<LoginUser>> = todoDao.getAllTodoLogUser()
     val todoListAny : LiveData<List<LoginUser>> = todoDao.selectTodoAnyLoginUser("000005")
 
+    //09/13/24
+    val todoLoggedInUserQuery : LiveData<List<LoginUser>> = todoDao.selectLoggedInUser("000005", formattedDate)
+    //09/13/24
 
     fun addTodo(fname: String, lname: String, designation: String, empid: String){
         Log.i("Kiko/addTodo","${fname}, ${lname}, " +
@@ -100,6 +118,24 @@ class TodoViewModel :ViewModel() {
             todoDao.updateLoginUserId(empid, createdAt, createdTimeOut)
         }
     }
+
+
+    //09/13/24
+    fun selectLoggedInUser(empID: String, createdAt: String) {
+
+        Log.i("selectLoggedInUser","$empID $createdAt")
+        viewModelScope.launch(Dispatchers.IO) {
+          todoDao.selectLoggedInUser(empID, createdAt)
+        }
+    }
+
+    fun updateLoggedInUser(empid: String, createdTime: String, createdAt: String){
+
+        viewModelScope.launch(Dispatchers.IO) {
+            todoDao.updateLoggedInUser(empid, createdTime, createdAt)
+        }
+    }
+    //09/13/24
     //for logged in Users
 
 

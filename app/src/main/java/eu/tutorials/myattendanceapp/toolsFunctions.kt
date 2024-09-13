@@ -53,6 +53,16 @@ fun AutoRefreshScreen() {
     }*/
 }
 
+/*
+ * 1. CustomButton is a composable function that takes a content
+ * parameter of type @Composable RowScope.() -> Unit.
+ * 2. Inside CustomButton, the Button composable is used,
+ * and the content parameter is passed to a Row composable.
+ * This approach allows you to create more flexible and reusable UI components by leveraging the RowScope within the Button content.
+ *
+ * EX implementation: CustomButton { RefreshButtonScreen() }
+ *
+ */
 @Composable
 fun CustomButton(content: @Composable () -> Unit) {
     Button(onClick = { /* Do something */ }) {

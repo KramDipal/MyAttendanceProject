@@ -38,10 +38,17 @@ interface TodoDao {
     fun deleteTodoLog(id : Int)
     //LoginUser table
 
-
-
     //Update table where empid = empid and createDate = createDate (current date)
-    @Query("UPDATE LoginUser SET createdTimeOut = :createdTimeOut WHERE empId = :empID and createdAt = :createdAt")
+    //for user logged out update
+    @Query("UPDATE LoginUser SET createdTimeOut = :createdTimeOut WHERE empid = :empID and createdAt = :createdAt")
     fun updateLoginUserId(empID: String, createdAt: String, createdTimeOut: String)
+
+
+    //select query to check if record exist and already logged-in
+    @Query("Select * from LoginUser where empid = :empID and createdAt = :createdAt")
+    fun selectLoggedInUser(empID: String, createdAt: String): LiveData<List<LoginUser>>
+
+    @Query("UPDATE LoginUser SET createdTime = :createdTime WHERE empid = :empID and createdAt = :createdAt")
+    fun updateLoggedInUser(empID: String, createdTime: String, createdAt: String)
 
 }

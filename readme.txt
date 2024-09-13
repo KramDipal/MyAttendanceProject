@@ -113,3 +113,19 @@ Added:
 - replaced with partFour variable
 44. Added CustomButton for composable function
 - for learning...
+
+09/13/24
+45. TodoDao
+** to check if user already log on the same day.  thus will update the time logged-in everytime time user "press Log me in button"
+- Select * from LoginUser where empid = :empID and createdAt = :createdAt
+- Added UPDATE LoginUser 
+46. ReportGenerator
+Added code :
+//to fix system crash in attempt to generate a report but still without timeout from user.
+
+47. ScannedAlert
+Added todoLoggedInUserQuery relatedt to #1
+
+48. TodoViewModel
+Added line to get the where condition for the select statement.
+ val todoLoggedInUserQuery : LiveData<List<LoginUser>> = todoDao.selectLoggedInUser("000005", formattedDate)
