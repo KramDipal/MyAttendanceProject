@@ -256,7 +256,7 @@ fun TodoItem(item : LoginUser,onDelete : ()-> Unit) {
 
                 val timeDiff = timeFormatterX(item.createdTime, item.createdTimeOut)
                 val parts = timeDiff.split(":")
-                Text(text = "Time Difference:   $timeDiff", fontSize = 16.sp,color = Color.White)
+                Text(text = "Hours Worked:   $timeDiff", fontSize = 16.sp,color = Color.White)
             }
 
 

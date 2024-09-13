@@ -11,7 +11,11 @@ import java.io.FileOutputStream
 import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, toDate: String) {
@@ -25,6 +29,16 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
     var count: Int = 1
     var countDaysWork: Int = 0
     var countDaysPay: Double
+
+    // Define the formatter to include the day of the week
+    //09/13/24
+    val year = LocalDateTime.now().year
+    val month = LocalDateTime.now().monthValue
+    val day = LocalDateTime.now().dayOfMonth
+    val dateX = LocalDate.of(year, month, day)
+    val formatDate = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy", Locale.ENGLISH)
+    val formattedDate = dateX.format(formatDate)
+    //09/13/24
 
     var paint: Paint = Paint() // Initialize with a non-null value
     paint.textSize = 10f
@@ -72,7 +86,7 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
     canvas.drawText("____________________________________________________________________________________________________________________",5f, yPosition.toFloat(), paint)
     yPosition += 20
 
-    canvas.drawText("No.                 Date Logged                                       Time Logged             Employee name            Employee ID           Overtime Hour/s",5f, yPosition.toFloat(), paint)
+    canvas.drawText("No.                 Date Logged                                       Time Logged             Employee name            Employee ID           Hours Worked",5f, yPosition.toFloat(), paint)
     yPosition += 20
 
 
@@ -87,7 +101,7 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
             timeDiff = "hh:mm:ss"
         }
 
-        canvas.drawText("${count}\t        ${i.createdAt}\t        ${i.createdTime}\t  | ${i.createdTimeOut}                  ${i.fname}\t                             ${i.empid}                    $timeDiff",
+        canvas.drawText("${count}\t             ${i.createdAt}\t      ${i.createdTime}\t  | ${i.createdTimeOut}                  ${i.fname}\t                             ${i.empid}                    $timeDiff",
                     5f,
             yPosition.toFloat(),
             paint)
@@ -115,14 +129,14 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
     yPosition += 50
 
 
-    canvas.drawText("_______________________________________________________",5f, yPosition.toFloat(), paint)
+    canvas.drawText("___________________________________________________________________",5f, yPosition.toFloat(), paint)
     yPosition += 8
-    canvas.drawText("Employee Signature                                 Date",5f, yPosition.toFloat(), paint)
+    canvas.drawText("Employee Signature                       Date ($formattedDate)",5f, yPosition.toFloat(), paint)
     yPosition += 30
 
-    canvas.drawText("_______________________________________________________",5f, yPosition.toFloat(), paint)
+    canvas.drawText("___________________________________________________________________",5f, yPosition.toFloat(), paint)
     yPosition += 8
-    canvas.drawText("Manager Signature                                    Date",5f, yPosition.toFloat(), paint)
+    canvas.drawText("Manager Signature                        Date ($formattedDate)",5f, yPosition.toFloat(), paint)
     yPosition += 30
 
 
