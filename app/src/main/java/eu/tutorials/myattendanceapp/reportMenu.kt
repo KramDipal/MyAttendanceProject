@@ -248,6 +248,8 @@ fun TodoItem(item : LoginUser,onDelete : ()-> Unit) {
             Text(text = "Designation:   ${item.designation}",fontSize = 16.sp,color = Color.White)
             Text(text = "Latitude:      ${item.latitude}",fontSize = 16.sp,color = Color.White)
             Text(text = "Longitute:     ${item.longitude}",fontSize = 16.sp,color = Color.White)
+
+
             Text(text = "Date / Time Logged In and Out:  ${item.createdAt}  | ${item.createdTime} | ${item.createdTimeOut}",fontSize = 16.sp,color = Color.White)
 
             Log.i("reportMenu/timeFormatterX","$item.createdTime $item.createdTimeOut")

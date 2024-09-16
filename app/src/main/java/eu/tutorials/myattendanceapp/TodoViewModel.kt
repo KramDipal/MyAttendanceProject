@@ -83,7 +83,7 @@ class TodoViewModel :ViewModel() {
 
 
        Log.i("Kiko/addLoginUser","${fname}, ${lname}, " +
-                "${designation}, ${empid}")
+                "${designation}, ${empid} ${dDate} ${dTime}")
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.addLoginUser(
                 LoginUser(
@@ -113,11 +113,13 @@ class TodoViewModel :ViewModel() {
         }
     }
 
+
     fun updateLoginUser(empid: String, createdAt: String, createdTimeOut: String){
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.updateLoginUserId(empid, createdAt, createdTimeOut)
         }
     }
+
 
 
     //09/13/24

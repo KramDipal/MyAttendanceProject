@@ -110,6 +110,7 @@ fun ScannedAlert(
         contract = ActivityResultContracts.RequestPermission()
     ){ isGranted: Boolean ->
         if (isGranted) {
+            //sendSMSPermissionLauncher.launch(Manifest.permission.SEND_SMS)
             //Toast.makeText(context, "SMS Permission granted", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(context, "SMS Permission denied", Toast.LENGTH_SHORT).show()

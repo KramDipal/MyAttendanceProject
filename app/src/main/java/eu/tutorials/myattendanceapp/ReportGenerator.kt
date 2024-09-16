@@ -94,6 +94,8 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
     for (i in users)
     {
         //to fix system crash in attempt to generate a report but still without timeout from user.
+
+
         if(i.createdTimeOut != "hh:mm:ss") {
             timeDiff = timeFormatterX(i.createdTime, i.createdTimeOut)
         }
@@ -101,8 +103,9 @@ fun writeDataToPdf(users: List<LoginUser>, filePath: String, fromDate: String, t
             timeDiff = "hh:mm:ss"
         }
 
+
         canvas.drawText("${count}\t             ${i.createdAt}\t      ${i.createdTime}\t  | ${i.createdTimeOut}                  ${i.fname}\t                             ${i.empid}                    $timeDiff",
-                    5f,
+                            5f,
             yPosition.toFloat(),
             paint)
 
