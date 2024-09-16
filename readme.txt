@@ -129,3 +129,9 @@ Added todoLoggedInUserQuery relatedt to #1
 48. TodoViewModel
 Added line to get the where condition for the select statement.
  val todoLoggedInUserQuery : LiveData<List<LoginUser>> = todoDao.selectLoggedInUser("000005", formattedDate)
+
+09/16/24
+49. with fix on crash
+1. TodoDatabase.kt
+- with fix for crash scenario during LoginUser insert.
+- the fix: from should 1 instead of 2.
